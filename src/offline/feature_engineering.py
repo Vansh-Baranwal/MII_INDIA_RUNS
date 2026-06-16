@@ -180,6 +180,9 @@ def main():
             'feat_product_exposure': compute_product_exposure(row),
             'feat_trajectory_transition': compute_trajectory_transition(row),
             'feat_availability_score': compute_availability_score(row),
+            'feat_saved_boost': min(0.15, math.log1p(row.get('saved_by_recruiters_30d', 0)) * 0.05),
+            'feat_search_appearance_boost': min(0.10, row.get('search_appearance_30d', 0) / 500.0),
+            'feat_verified_search_skill': 1.03 if row.get('has_verified_search_skill') else 1.0,
             'feat_architect_no_coding': feat_architect_no_coding,
             'feat_wrapper_ai_only': feat_wrapper_ai_only,
             'contradiction_score': compute_contradiction_score(row)

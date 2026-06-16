@@ -43,10 +43,10 @@ def safe_date_sort(job):
 
 def extract_features(c: Dict[str, Any]) -> Dict[str, Any]:
     """Flattens the candidate dictionary into a flat schema suitable for Polars/Parquet."""
-    profile = c.get('profile', {})
-    signals = c.get('redrob_signals', {})
+    profile = c.get('profile') or {}
+    signals = c.get('redrob_signals') or {}
     
-    career = c.get('career_history', [])
+    career = c.get('career_history') or []
     career.sort(key=safe_date_sort, reverse=True)
     
     career_texts = []
@@ -65,11 +65,14 @@ def extract_features(c: Dict[str, Any]) -> Dict[str, Any]:
     else:
         last_two_texts = f"{recent_role_title} - {recent_role_desc}"
 
-    skills = c.get('skills', [])
-    skills_text = ", ".join([s.get('name', '') for s in skills])
+    skills = c.get('skills') or []
+    assessments = signals.get('skill_assessment_scores') or {}
+    assessment_names = list(assessments.keys())
+    skills_text = ", ".join([s.get('name', '') for s in skills] + assessment_names)
     
-    education = c.get('education', [])
-    grad_year = max([ed.get('end_year', 0) for ed in education]) if education else 0
+    education = c.get('education') or []
+    safe_years = [ed.get('end_year') for ed in education if isinstance(ed.get('end_year'), int)]
+    grad_year = max(safe_years) if safe_years else 0
 
     return {
         'candidate_id': c.get('candidate_id'),
@@ -85,8 +88,8 @@ def extract_features(c: Dict[str, Any]) -> Dict[str, Any]:
         
         'total_duration_months': total_duration,
         'grad_year': grad_year,
-        'expected_salary_min': signals.get('expected_salary_range_inr_lpa', {}).get('min', 0),
-        'expected_salary_max': signals.get('expected_salary_range_inr_lpa', {}).get('max', 0),
+        'expected_salary_min': (signals.get('expected_salary_range_inr_lpa') or {}).get('min', 0),
+        'expected_salary_max': (signals.get('expected_salary_range_inr_lpa') or {}).get('max', 0),
         
         'recruiter_response_rate': signals.get('recruiter_response_rate', 0.0),
         'last_active_date': signals.get('last_active_date', ''),
@@ -95,6 +98,10 @@ def extract_features(c: Dict[str, Any]) -> Dict[str, Any]:
         'profile_views_received_30d': signals.get('profile_views_received_30d', 0),
         'open_to_work_flag': signals.get('open_to_work_flag', False),
         'interview_completion_rate': signals.get('interview_completion_rate', 0.0),
+        
+        'saved_by_recruiters_30d': signals.get('saved_by_recruiters_30d', 0) or 0,
+        'search_appearance_30d': signals.get('search_appearance_30d', 0) or 0,
+        'has_verified_search_skill': any(k.lower() in ['faiss', 'qdrant', 'pinecone', 'recommendation systems', 'mlflow'] for k in assessment_names),
         
         'career_history_json': json.dumps(career),
         'skills_json': json.dumps(skills)

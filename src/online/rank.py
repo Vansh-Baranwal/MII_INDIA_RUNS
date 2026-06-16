@@ -90,7 +90,7 @@ def main():
             0.15 * pl.col("feat_builder_score")
         ),
         Trajectory_Multiplier = pl.col("feat_product_exposure") + pl.col("feat_trajectory_transition"),
-        Behavioral_Multiplier = pl.col("feat_availability_score"),
+        Behavioral_Multiplier = pl.col("feat_availability_score") + pl.col("feat_saved_boost") + pl.col("feat_search_appearance_boost"),
         Persona_Penalty = pl.col("feat_wrapper_ai_only") * pl.col("feat_architect_no_coding"),
         Honeypot_Decay = pl.col("contradiction_score").map_elements(lambda x: math.exp(-x), return_dtype=pl.Float64)
     )
@@ -99,6 +99,7 @@ def main():
         Final_Score = (
             pl.col("Base_Score") *
             pl.col("Technical_Multiplier") *
+            pl.col("feat_verified_search_skill") *
             pl.col("Trajectory_Multiplier") *
             pl.col("Behavioral_Multiplier") *
             pl.col("Persona_Penalty") *
