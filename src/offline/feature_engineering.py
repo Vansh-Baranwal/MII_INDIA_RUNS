@@ -21,9 +21,10 @@ RETRIEVAL_TERMS = {
 }
 
 RANKING_TERMS = {
-    "learning-to-rank": 1.0, "lambdamart": 1.0, "re-ranking": 0.9, 
-    "recommendation systems": 0.8, "personalization": 0.8, "collaborative filtering": 0.7,
-    "xgboost": 0.7, "lightgbm": 0.7
+    "learning-to-rank": 1.0, "learning to rank": 1.0, "lambdamart": 1.0, 
+    "ndcg": 0.8, "dcg": 0.8, "mrr": 0.8,
+    "re-ranking": 0.5, "reranking": 0.5, "ranking system": 0.5, "ranking pipeline": 0.5,
+    "recommendation systems": 0.8, "personalization": 0.8
 }
 
 EVALUATION_TERMS = {
