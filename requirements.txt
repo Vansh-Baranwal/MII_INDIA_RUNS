@@ -1,0 +1,4 @@
+polars
+numpy
+faiss-cpu
+sentence-transformers

@@ -1,1 +1,41 @@
-artifacts/
+# Python Cache
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+
+# Virtual Environments
+venv/
+env/
+.env
+.venv
+
+# IDE Files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Jupyter / Checkpoints
+.ipynb_checkpoints/
+
+# Generated Outputs & Datasets
+*.csv
+*.parquet
+*.npy
+*.faiss
+top*.csv
+submission.csv
+top50_raw_text.txt
+read_docx_output.txt
+
+# Artifacts Directory (unless required raw data is stored here)
+artifacts/features.parquet
+artifacts/embeddings_*.npy
+artifacts/candidates_*.faiss
+artifacts/parsed_candidates.parquet
+artifacts/debug_*.parquet
+
+# OS specific
+.DS_Store
+Thumbs.db
