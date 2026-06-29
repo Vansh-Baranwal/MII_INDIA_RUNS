@@ -74,6 +74,7 @@ To run the entire pipeline end-to-end, execute the provided PowerShell script:
 
 ```
 ├── .gitignore
+├── LICENSE
 ├── README.md
 ├── requirements.txt
 ├── run_pipeline.ps1
