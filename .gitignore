@@ -29,12 +29,8 @@ submission.csv
 top50_raw_text.txt
 read_docx_output.txt
 
-# Artifacts Directory (unless required raw data is stored here)
-artifacts/features.parquet
-artifacts/embeddings_*.npy
-artifacts/candidates_*.faiss
-artifacts/parsed_candidates.parquet
-artifacts/debug_*.parquet
+# Artifacts Directory (generated at runtime)
+artifacts/
 
 # OS specific
 .DS_Store
