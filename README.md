@@ -73,10 +73,14 @@ To run the entire pipeline end-to-end, execute the provided PowerShell script:
 ## Repository Structure
 
 ```
+├── .gitignore
 ├── README.md
 ├── requirements.txt
 ├── run_pipeline.ps1
-├── .gitignore
+├── docs/
+│   └── (Architectural audits, design reviews, code reviews)
+├── experiments/
+│   └── (Ablation studies, evaluation tests, experimental scripts)
 └── src/
     ├── offline/
     │   ├── parse_candidates.py
